@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}소개 - 개발 블로그{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m8 offset-m2">
+        <div class="card">
+            <div class="card-content center-align">
+                <span class="card-title">
+                    <span class="material-icons large blue-text">person</span>
+                    <h3>블로그 소개</h3>
+                </span>
+                
+                <div class="row">
+                    <div class="col s12 m6">
+                        <h5><span class="material-icons left">code</span> 기술 스택</h5>
+                        <ul class="collection">
+                            <li class="collection-item">
+                                <span class="material-icons left">code</span> FastAPI
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">storage</span> SQLAlchemy
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">dns</span> MySQL
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">palette</span> Jinja2
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">view_in_ar</span> Docker
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col s12 m6">
+                        <h5><span class="material-icons left">star</span> 주요 기능</h5>
+                        <ul class="collection">
+                            <li class="collection-item">
+                                <span class="material-icons left">list</span> 포스트 목록 보기
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">add</span> 새 포스트 작성
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">edit</span> 포스트 수정
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">delete</span> 포스트 삭제
+                            </li>
+                            <li class="collection-item">
+                                <span class="material-icons left">visibility</span> 포스트 상세 보기
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="section">
+                    <h5><span class="material-icons left">info</span> 프로젝트 정보</h5>
+                    <p class="flow-text grey-text text-darken-2">
+                        이 블로그는 FastAPI, SQLAlchemy, Jinja2를 활용하여 개발된 개인 블로그입니다.
+                        MySQL 데이터베이스를 사용하여 CRUD 기능을 구현했으며, Docker를 통해 컨테이너화되어 있습니다.
+                    </p>
+                    
+                    <div class="section">
+                        <a href="/" class="btn waves-effect waves-light blue">
+                            <span class="material-icons left">home</span> 홈으로 돌아가기
+                        </a>
+                        <a href="/create" class="btn waves-effect waves-light green">
+                            <span class="material-icons left">add</span> 첫 글 작성하기
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

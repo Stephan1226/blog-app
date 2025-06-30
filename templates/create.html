@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}새 글 작성 - 개발 블로그{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    <span class="material-icons left">edit</span> 새 글 작성
+                </span>
+                
+                <form method="POST" action="/create" id="post-form">
+                    <div class="input-field">
+                        <input type="text" id="title" name="title" required>
+                        <label for="title">제목</label>
+                    </div>
+                    <div class="input-field">
+                        <textarea class="materialize-textarea" id="content" name="content" required
+                                  placeholder="# 제목
+
+## 소제목
+
+**굵은 글씨**와 *기울임 글씨*를 사용할 수 있습니다.
+
+```python
+# 코드 블록 예시
+def hello_world():
+    print('Hello, World!')
+```
+
+- 목록 항목 1
+- 목록 항목 2
+
+[링크](https://example.com)도 추가할 수 있습니다."></textarea>
+                        <label for="content">내용 <small class="grey-text">(마크다운 지원)</small></label>
+                    </div>
+                    
+                    <!-- 마크다운 도움말 -->
+                    <div class="section">
+                        <a class="btn-flat waves-effect waves-light blue-text" onclick="toggleMarkdownHelp()">
+                            <span class="material-icons left">help</span> 마크다운 도움말
+                        </a>
+                        <div id="markdown-help" class="card-panel blue lighten-5" style="display: none;">
+                            <h6>마크다운 문법:</h6>
+                            <p><code># 제목</code> - 큰 제목</p>
+                            <p><code>## 소제목</code> - 작은 제목</p>
+                            <p><code>**굵게**</code> - 굵은 글씨</p>
+                            <p><code>*기울임*</code> - 기울임 글씨</p>
+                            <p><code>`코드`</code> - 인라인 코드</p>
+                            <p><code>```언어<br>코드 블록<br>```</code> - 코드 블록</p>
+                            <p><code>- 항목</code> - 목록</p>
+                            <p><code>[텍스트](URL)</code> - 링크</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-action">
+                        <a href="/" class="btn-flat waves-effect waves-light">
+                            <span class="material-icons left">arrow_back</span> 취소
+                        </a>
+                        <button type="submit" class="btn waves-effect waves-light blue right">
+                            <span class="material-icons left">save</span> 저장
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 실시간 미리보기 -->
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    <span class="material-icons left">visibility</span> 미리보기
+                </span>
+                <div id="preview-content" style="min-height: 400px;">
+                    <p class="grey-text text-darken-1">내용을 입력하면 미리보기가 표시됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    M.updateTextFields();
+    M.textareaAutoResize(document.getElementById('content'));
+});
+
+function toggleMarkdownHelp() {
+    const helpDiv = document.getElementById('markdown-help');
+    if (helpDiv.style.display === 'none') {
+        helpDiv.style.display = 'block';
+    } else {
+        helpDiv.style.display = 'none';
+    }
+}
+
+// 실시간 마크다운 미리보기
+let previewTimeout;
+const contentTextarea = document.getElementById('content');
+const previewDiv = document.getElementById('preview-content');
+
+function updatePreview() {
+    const content = contentTextarea.value;
+    
+    if (!content.trim()) {
+        previewDiv.innerHTML = '<p class="grey-text text-darken-1">내용을 입력하면 미리보기가 표시됩니다.</p>';
+        return;
+    }
+    
+    // 간단한 클라이언트 사이드 마크다운 렌더링
+    let html = content;
+    
+    // 제목
+    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+    
+    // 굵게, 기울임
+    html = html.replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>');
+    html = html.replace(/\*(.*)\*/gim, '<em>$1</em>');
+    
+    // 인라인 코드
+    html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
+    
+    // 링크
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>');
+    
+    // 목록
+    html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+    html = html.replace(/(<li>.*<\/li>)/gims, '<ul>$1</ul>');
+    
+    // 줄바꿈
+    html = html.replace(/\n/gim, '<br>');
+    
+    previewDiv.innerHTML = html;
+}
+
+contentTextarea.addEventListener('input', function() {
+    clearTimeout(previewTimeout);
+    previewTimeout = setTimeout(updatePreview, 300);
+});
+
+// 초기 미리보기 업데이트
+updatePreview();
+</script>
+{% endblock %} 

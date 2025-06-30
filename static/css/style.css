@@ -1,0 +1,461 @@
+/* Material Design 스타일 */
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #757575;
+    --success-color: #4CAF50;
+    --warning-color: #FF9800;
+    --error-color: #F44336;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --background: #FAFAFA;
+    --surface: #FFFFFF;
+    --border: #E0E0E0;
+}
+
+/* 다크모드 테마 */
+body.material-dark {
+    --text-primary: #FFFFFF;
+    --text-secondary: #B0B0B0;
+    --background: #121212;
+    --surface: #1E1E1E;
+    --border: #424242;
+}
+
+/* 기본 레이아웃 */
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 카드 스타일 */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.card-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.card-title a:hover {
+    color: var(--primary-color);
+}
+
+/* 버튼 스타일 */
+.btn {
+    border-radius: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.btn-flat {
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+/* 입력 필드 스타일 */
+.input-field input,
+.input-field textarea {
+    border-bottom: 1px solid var(--border);
+    transition: border-bottom 0.3s ease;
+}
+
+.input-field input:focus,
+.input-field textarea:focus {
+    border-bottom: 2px solid var(--primary-color);
+    box-shadow: 0 1px 0 0 var(--primary-color);
+}
+
+/* 마크다운 콘텐츠 스타일 */
+.markdown-content {
+    line-height: 1.7;
+    color: var(--text-primary);
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+
+.markdown-content h1 {
+    font-size: 2rem;
+}
+
+.markdown-content h2 {
+    font-size: 1.75rem;
+}
+
+.markdown-content h3 {
+    font-size: 1.5rem;
+}
+
+.markdown-content p {
+    margin-bottom: 1rem;
+}
+
+.markdown-content code {
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.markdown-content pre {
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.markdown-content pre code {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--text-secondary);
+    background-color: rgba(0,0,0,0.02);
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.markdown-content li {
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.markdown-content table th {
+    background-color: rgba(0,0,0,0.05);
+    font-weight: 500;
+}
+
+/* 목차 스타일 */
+.toc {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.toc-item {
+    margin-bottom: 0.25rem;
+}
+
+.toc-item.level-1 { margin-left: 0; }
+.toc-item.level-2 { margin-left: 1rem; }
+.toc-item.level-3 { margin-left: 2rem; }
+.toc-item.level-4 { margin-left: 3rem; }
+.toc-item.level-5 { margin-left: 4rem; }
+.toc-item.level-6 { margin-left: 5rem; }
+
+.toc-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+    display: block;
+    padding: 0.25rem 0;
+}
+
+.toc-link:hover {
+    color: var(--primary-color);
+}
+
+.toc-link.active {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* 코드 하이라이팅 */
+.highlight {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.highlight pre {
+    margin: 0;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.05);
+}
+
+/* 다크모드 스타일 */
+body.material-dark .markdown-content code {
+    background-color: rgba(255,255,255,0.1);
+}
+
+body.material-dark .markdown-content pre {
+    background-color: rgba(255,255,255,0.05);
+}
+
+body.material-dark .markdown-content blockquote {
+    background-color: rgba(255,255,255,0.02);
+}
+
+body.material-dark .markdown-content table th {
+    background-color: rgba(255,255,255,0.05);
+}
+
+body.material-dark .highlight pre {
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* 테마 토글 버튼 */
+#theme-toggle {
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* 네비게이션 링크 */
+nav a:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .toc {
+        max-height: 300px;
+    }
+    
+    .markdown-content h1 {
+        font-size: 1.75rem;
+    }
+    
+    .markdown-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .markdown-content h3 {
+        font-size: 1.25rem;
+    }
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* AI 요약 스타일 */
+#ai-summary {
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+/* 칩 스타일 */
+.chip {
+    margin: 0.25rem;
+    font-weight: 500;
+}
+
+/* 읽기 시간 */
+.reading-time {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* 포스트 아이템 */
+.post-item {
+    margin-bottom: 2rem;
+}
+
+/* 스티키 사이드바 */
+.sticky-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+/* 컬렉션 아이템 */
+.collection-item {
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s ease;
+}
+
+.collection-item:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
+body.material-dark .collection-item:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* 카드 패널 */
+.card-panel {
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+/* 구분선 */
+.divider {
+    margin: 2rem 0;
+    height: 1px;
+    background-color: var(--border);
+}
+
+/* 섹션 */
+.section {
+    margin: 1rem 0;
+}
+
+/* 플로우 텍스트 */
+.flow-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.material-icons,
+.material-icons-outlined,
+.material-icons-round,
+.material-icons-sharp,
+.material-icons-two-tone {
+    vertical-align: middle;
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+.icon-with-text {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4em !important;
+    vertical-align: middle !important;
+}
+
+.material-icons {
+    vertical-align: middle !important;
+    font-size: 1.3em !important;
+    line-height: 1 !important;
+}
+
+nav, .nav-wrapper {
+    height: 64px;
+    min-height: 64px;
+}
+nav .nav-wrapper {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding: 0 24px;
+}
+nav .brand-logo {
+    font-size: 2rem;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    height: 64px;
+}
+nav .nav-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 1.2rem;
+    height: 64px;
+}
+nav .nav-actions > li {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding: 0 8px;
+}
+nav .btn, nav .btn-flat {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 18px;
+    font-size: 1.1rem;
+    margin: 0;
+}
+nav .material-icons,
+nav .icon-with-text .material-icons {
+    font-size: 2rem;
+    line-height: 1;
+    vertical-align: middle;
+} 
