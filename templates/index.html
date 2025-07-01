@@ -3,128 +3,137 @@
 {% block title %}홈 - 개발 블로그{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col s12 m8">
-        <div class="section">
-            <h4 class="grey-text text-darken-3 icon-with-text">
-                <span class="material-icons">home</span> 최신 포스트
+<div class="responsive main-content">
+    <div class="content-area">
+        <section class="main-posts">
+            <h4>
+                <i>home</i>
+                최신 포스트
             </h4>
-        </div>
-        
-        {% if posts %}
-            {% for post in posts %}
-            <article class="card hoverable post-item">
-                <div class="card-content">
-                    <span class="card-title icon-with-text">
-                        <a href="/post/{{ post.id }}" class="grey-text text-darken-4">
-                            {{ post.title }}
-                        </a>
-                    </span>
-                    <p class="grey-text text-darken-1 icon-with-text">
+            
+            {% if posts %}
+                {% for post in posts %}
+                <article class="card">
+                    <h5>
+                        <a href="/post/{{ post.id }}">{{ post.title }}</a>
+                    </h5>
+                    <div class="meta-info">
                         <small>
-                            <span class="material-icons tiny">event</span> {{ post.created_at.strftime('%Y년 %m월 %d일') }}
+                            <i>event</i> {{ post.created_at.strftime('%Y년 %m월 %d일') }}
                             {% if post.author %}
-                            <span class="material-icons tiny">person</span> {{ post.author.username }}
+                            <i>person</i> {{ post.author.username }}
                             {% endif %}
-                            <span class="material-icons tiny">schedule</span> 약 {{ post.reading_time }}분 읽기
+                            <i>schedule</i> 약 {{ post.reading_time }}분 읽기
                         </small>
-                    </p>
-                    <p class="grey-text text-darken-2">
+                    </div>
+                    <p>
                         {{ post.content[:200] }}{% if post.content|length > 200 %}...{% endif %}
                     </p>
-                </div>
-                <div class="card-action">
-                    <a href="/post/{{ post.id }}" class="btn waves-effect waves-light blue icon-with-text">
-                        <span class="material-icons left">arrow_forward</span> 읽어보기
-                    </a>
-                    {% if is_authenticated and post.author and post.author.username == request.session.username %}
-                    <div class="right">
-                        <a href="/edit/{{ post.id }}" class="btn-flat waves-effect waves-light icon-with-text">
-                            <span class="material-icons">edit</span>
+                    <div class="actions">
+                        <a href="/post/{{ post.id }}">
+                            <button>
+                                <i>arrow_forward</i>
+                                <span>읽어보기</span>
+                            </button>
                         </a>
-                        <button class="btn-flat waves-effect waves-light red-text icon-with-text" onclick="deletePost({{ post.id }})">
-                            <span class="material-icons">delete</span>
+                        {% if is_authenticated and post.author and post.author.username == request.session.username %}
+                        <a href="/edit/{{ post.id }}">
+                            <button class="border">
+                                <i>edit</i>
+                            </button>
+                        </a>
+                        <button class="border" onclick="deletePost({{ post.id }})">
+                            <i>delete</i>
                         </button>
+                        {% endif %}
                     </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="center-align large-padding">
+                    <i class="extra">article</i>
+                    <h4>아직 개발 포스트가 없습니다</h4>
+                    <p>첫 번째 개발 포스트를 작성해보세요!</p>
+                    {% if is_authenticated %}
+                    <a href="/create">
+                        <button class="large">
+                            <i>add</i>
+                            <span>첫 포스트 작성하기</span>
+                        </button>
+                    </a>
+                    {% else %}
+                    <a href="/login">
+                        <button class="large">
+                            <i>login</i>
+                            <span>로그인하여 글쓰기</span>
+                        </button>
+                    </a>
                     {% endif %}
                 </div>
-            </article>
-            {% endfor %}
-        {% else %}
-            <div class="center-align" style="padding:4rem 0;">
-                <span class="material-icons grey-text" style="font-size:6rem;">article</span>
-                <h4 class="grey-text text-darken-2">아직 개발 포스트가 없습니다</h4>
-                <p class="grey-text text-darken-1">첫 번째 개발 포스트를 작성해보세요!</p>
-                {% if is_authenticated %}
-                <a href="/create" class="btn-large waves-effect waves-light blue">
-                    <span class="material-icons left">add</span> 첫 포스트 작성하기
-                </a>
-                {% else %}
-                <a href="/login" class="btn-large waves-effect waves-light blue">
-                    <span class="material-icons left">login</span> 로그인하여 글쓰기
-                </a>
-                {% endif %}
-            </div>
-        {% endif %}
-    </div>
-    
-    <!-- 사이드바 -->
-    <div class="col s12 m4">
-        <!-- 블로그 정보 -->
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title icon-with-text">
-                    <span class="material-icons left">code</span> 개발 블로그 소개
-                </span>
-                <p class="grey-text text-darken-2">
+            {% endif %}
+        </section>
+        
+        <aside class="sidebar">
+            <!-- 블로그 정보 -->
+            <article class="card">
+                <h6>
+                    <i>code</i>
+                    개발 블로그 소개
+                </h6>
+                <p>
                     FastAPI, SQLAlchemy, Jinja2로 구축된 개발 블로그입니다. 
                     마크다운 지원, AI 요약, 다크모드 등 다양한 기능을 제공합니다.
                 </p>
-            </div>
-            <div class="card-action">
-                <a href="/about" class="btn-flat waves-effect waves-light blue-text icon-with-text">
-                    <span class="material-icons left">info</span> 더 알아보기
+                <a href="/about">
+                    <button class="border">
+                        <i>info</i>
+                        <span>더 알아보기</span>
+                    </button>
                 </a>
-            </div>
-        </div>
-        
-        <!-- 새 글 작성 -->
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title icon-with-text">
-                    <span class="material-icons left">edit</span> 새 글 작성
-                </span>
-                <p class="grey-text text-darken-2">
+            </article>
+            
+            <!-- 새 글 작성 -->
+            <article class="card">
+                <h6>
+                    <i>edit</i>
+                    새 글 작성
+                </h6>
+                <p>
                     마크다운으로 개발 블로그 포스트를 작성해보세요.
                 </p>
-            </div>
-            <div class="card-action">
                 {% if is_authenticated %}
-                <a href="/create" class="btn waves-effect waves-light green icon-with-text">
-                    <span class="material-icons left">add</span> 글쓰기
+                <a href="/create">
+                    <button>
+                        <i>add</i>
+                        <span>글쓰기</span>
+                    </button>
                 </a>
                 {% else %}
-                <a href="/login" class="btn-flat waves-effect waves-light green-text icon-with-text">
-                    <span class="material-icons left">login</span> 로그인
+                <a href="/login">
+                    <button class="border">
+                        <i>login</i>
+                        <span>로그인</span>
+                    </button>
                 </a>
                 {% endif %}
-            </div>
-        </div>
-        
-        <!-- 기술 스택 -->
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title icon-with-text">
-                    <span class="material-icons left">build</span> 기술 스택
-                </span>
-                <div class="chip blue white-text">FastAPI</div>
-                <div class="chip green white-text">MySQL</div>
-                <div class="chip cyan white-text">Docker</div>
-                <div class="chip orange white-text">SQLAlchemy</div>
-                <div class="chip grey white-text">Jinja2</div>
-                <div class="chip indigo white-text">Materialize</div>
-            </div>
-        </div>
+            </article>
+            
+            <!-- 기술 스택 -->
+            <article class="card">
+                <h6>
+                    <i>build</i>
+                    기술 스택
+                </h6>
+                <div class="tech-stack">
+                    <span class="chip">FastAPI</span>
+                    <span class="chip">MySQL</span>
+                    <span class="chip">Docker</span>
+                    <span class="chip">SQLAlchemy</span>
+                    <span class="chip">Jinja2</span>
+                    <span class="chip">Beer CSS</span>
+                </div>
+            </article>
+        </aside>
     </div>
 </div>
 
@@ -139,7 +148,12 @@ function deletePost(postId) {
         }).then(response => {
             if (response.ok) {
                 window.location.reload();
+            } else {
+                alert('포스트 삭제에 실패했습니다.');
             }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('포스트 삭제 중 오류가 발생했습니다.');
         });
     }
 }

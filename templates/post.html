@@ -11,16 +11,14 @@
                 <header class="section">
                     <h4 class="grey-text text-darken-3 icon-with-text">{{ post.title }}</h4>
                     <p class="grey-text text-darken-1 icon-with-text">
-                        <small>
-                            <span class="material-icons tiny">event</span> {{ post.created_at.strftime('%Y년 %m월 %d일 %H:%M') }}
-                            {% if post.author %}
-                            <span class="material-icons tiny">person</span> {{ post.author.username }}
-                            {% endif %}
-                            {% if post.updated_at and post.updated_at != post.created_at %}
-                            <span class="material-icons tiny">edit</span> 수정됨: {{ post.updated_at.strftime('%Y년 %m월 %d일 %H:%M') }}
-                            {% endif %}
-                            <span class="material-icons tiny">schedule</span> 약 {{ reading_time }}분 읽기
-                        </small>
+                        <span class="material-icons tiny">event</span> <span>{{ post.created_at.strftime('%Y년 %m월 %d일 %H:%M') }}</span>
+                        {% if post.author %}
+                        <span class="material-icons tiny">person</span> <span>{{ post.author.username }}</span>
+                        {% endif %}
+                        {% if post.updated_at and post.updated_at != post.created_at %}
+                        <span class="material-icons tiny">edit</span> <span>수정됨: {{ post.updated_at.strftime('%Y년 %m월 %d일 %H:%M') }}</span>
+                        {% endif %}
+                        <span class="material-icons tiny">schedule</span> <span>약 {{ reading_time }}분 읽기</span>
                     </p>
                     
                     <!-- AI 요약 버튼 -->
@@ -52,7 +50,7 @@
                     <a href="/edit/{{ post.id }}" class="btn waves-effect waves-light blue icon-with-text">
                         <span class="material-icons left">edit</span> 수정
                     </a>
-                    <button class="btn waves-effect waves-light red icon-with-text" onclick="deletePost({{ post.id }})">
+                    <button class="btn waves-effect waves-light red icon-with-text" onclick="deletePost('{{ post.id }}')">
                         <span class="material-icons left">delete</span> 삭제
                     </button>
                 </div>
@@ -90,13 +88,11 @@
                         <span class="material-icons left">info</span> 포스트 정보
                     </span>
                     <p class="grey-text text-darken-1 icon-with-text">
-                        <small>
-                            <div><span class="material-icons tiny">event</span> 작성일: {{ post.created_at.strftime('%Y.%m.%d') }}</div>
-                            <div><span class="material-icons tiny">schedule</span> 읽기 시간: {{ reading_time }}분</div>
-                            {% if post.author %}
-                            <div><span class="material-icons tiny">person</span> 작성자: {{ post.author.username }}</div>
-                            {% endif %}
-                        </small>
+                        <span class="material-icons tiny">event</span> <span>작성일: {{ post.created_at.strftime('%Y.%m.%d') }}</span>
+                        <span class="material-icons tiny">schedule</span> <span>읽기 시간: {{ reading_time }}분</span>
+                        {% if post.author %}
+                        <span class="material-icons tiny">person</span> <span>작성자: {{ post.author.username }}</span>
+                        {% endif %}
                     </p>
                 </div>
             </div>
