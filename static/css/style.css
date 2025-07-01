@@ -472,9 +472,55 @@ footer.page {
   padding: 0;
   color: #555;
 }
+.markdown-content pre .copy-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.05);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.markdown-content pre .copy-button:hover {
+  background: rgba(0,0,0,0.1);
+}
+.markdown-content pre .copy-button .material-icons {
+  font-size: 20px;
+  color: #222;
+}
+
+.markdown-content pre .copy-button.copied {
+  background: #e0f2e0;
+}
+.markdown-content pre .copy-button.copied .material-icons {
+  color: #006400;
+}
+
+body.dark .markdown-content pre .copy-button {
+    background: rgba(255,255,255,0.1);
+}
+body.dark .markdown-content pre .copy-button:hover {
+    background: rgba(255,255,255,0.2);
+}
+body.dark .markdown-content pre .copy-button .material-icons {
+    color: #e0e0e0;
+}
+
+body.dark .markdown-content pre .copy-button.copied {
+    background: #335533;
+}
+body.dark .markdown-content pre .copy-button.copied .material-icons {
+    color: #99ff99;
+}
+
 .markdown-content blockquote {
-  border-left: 4px solid #ececec;
-  padding: 16px 24px;
+  border-left: 4px solid #ddd;
+  padding: 1rem 1.5rem;
   margin: 18px 0;
   background: #fafbfc;
   color: #888;

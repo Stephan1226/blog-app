@@ -280,8 +280,8 @@ function addCodeCopyButtons() {
         if (pre.querySelector('.copy-button')) return;
         
         const button = document.createElement('button');
-        button.className = 'btn btn-sm btn-outline-secondary copy-button position-absolute top-0 end-0 m-2';
-        button.innerHTML = '<i class="fas fa-copy"></i>';
+        button.className = 'copy-button';
+        button.innerHTML = '<i class="material-icons">content_copy</i>';
         button.title = '코드 복사';
         
         // pre 요소를 relative로 설정
@@ -291,14 +291,12 @@ function addCodeCopyButtons() {
         button.addEventListener('click', async () => {
             try {
                 await navigator.clipboard.writeText(codeBlock.textContent);
-                button.innerHTML = '<i class="fas fa-check"></i>';
-                button.classList.remove('btn-outline-secondary');
-                button.classList.add('btn-success');
+                button.innerHTML = '<i class="material-icons">done</i>';
+                button.classList.add('copied');
                 
                 setTimeout(() => {
-                    button.innerHTML = '<i class="fas fa-copy"></i>';
-                    button.classList.remove('btn-success');
-                    button.classList.add('btn-outline-secondary');
+                    button.innerHTML = '<i class="material-icons">content_copy</i>';
+                    button.classList.remove('copied');
                 }, 2000);
                 
                 showToast('코드가 클립보드에 복사되었습니다!', 'success');
