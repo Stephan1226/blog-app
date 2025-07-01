@@ -248,6 +248,10 @@ nav.top {
   box-sizing: border-box;
 }
 
+main > .container > .row {
+  margin-top: 2rem;
+}
+
 .card {
   box-sizing: border-box;
   padding: 24px;
