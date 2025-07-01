@@ -9,6 +9,9 @@ services:
       - DATABASE_URL=mysql+pymysql://blog_user:blog_password@db:3306/blog_db
       - ENV=dev
       - PYTHONUNBUFFERED=1
+      - PYTHONIOENCODING=utf-8
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
     depends_on:
       - db
     volumes:

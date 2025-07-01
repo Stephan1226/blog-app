@@ -88,15 +88,25 @@ CSS 변수를 활용한 다크모드 구현:
 ```
 
 ### 3. AI 요약 기능
-Google Gemini API를 활용한 포스트 자동 요약:
+OpenRouter API를 활용한 포스트 자동 요약:
 
 ```python
-import google.generativeai as genai
+from openai import OpenAI
 
-async def summarize_with_gemini(content: str) -> str:
-    model = genai.GenerativeModel('gemini-pro')
-    response = model.generate_content(f"다음 글을 요약해주세요: {content}")
-    return response.text
+async def summarize_with_openrouter(content: str) -> str:
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.getenv("API_KEY")
+    )
+    response = client.chat.completions.create(
+        extra_headers={
+            "HTTP-Referer": "http://localhost:8000",
+            "X-Title": "개발 블로그"
+        },
+        model="deepseek/deepseek-r1-0528:free",
+        messages=[{"role": "user", "content": f"다음 글을 요약해주세요: {content}"}]
+    )
+    return response.choices[0].message.content
 ```
 
 ## 🛠️ 기술 스택
@@ -113,7 +123,7 @@ async def summarize_with_gemini(content: str) -> str:
 
 1. **마크다운 렌더링**: Python-Markdown 라이브러리를 사용해 서버 사이드에서 렌더링
 2. **다크모드 구현**: CSS 변수와 JavaScript를 조합한 테마 시스템
-3. **AI 통합**: Gemini API를 활용한 콘텐츠 요약 기능
+3. **AI 통합**: OpenRouter API를 활용한 콘텐츠 요약 기능
 
 ## 🔗 유용한 링크
 

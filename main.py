@@ -12,7 +12,7 @@ from database import get_db, engine
 from models import Base, User
 from crud import post_crud, user_crud
 from schemas import PostCreate, PostUpdate, UserCreate
-from utils import markdown_to_html, extract_headings, summarize_with_gemini, generate_reading_time
+from utils import markdown_to_html, extract_headings, summarize_with_openrouter, generate_reading_time
 from auth import authenticate_user, require_auth, is_authenticated
 
 # 상수 정의
@@ -226,8 +226,9 @@ async def summarize_post(post_id: int, db: Session = Depends(get_db)):
     post = get_post_or_404(db, post_id)
     
     try:
-        summary = await summarize_with_gemini(post.content)
-        return JSONResponse(content={"summary": summary})
+        summary_markdown = await summarize_with_openrouter(post.content)
+        summary_html, _ = markdown_to_html(summary_markdown)
+        return JSONResponse(content={"summary": summary_html})
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

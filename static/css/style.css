@@ -739,4 +739,132 @@ ul.icon-list .material-icons {
     margin-top: 32px;
     font-size: 0.95rem;
   }
+}
+
+/* 새로운 디자인 요소들 */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(0, 123, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 123, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(0, 123, 255, 0.1);
+  border-color: rgba(0, 123, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.feature-item i {
+  font-size: 1.2em;
+  color: #007bff;
+  flex-shrink: 0;
+}
+
+.feature-item span {
+  font-weight: 500;
+  color: #333;
+}
+
+.env-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.env-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(40, 167, 69, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(40, 167, 69, 0.1);
+}
+
+.env-item i {
+  font-size: 1.1em;
+  color: #28a745;
+  flex-shrink: 0;
+}
+
+.env-item span {
+  font-size: 0.95em;
+  color: #555;
+  font-weight: 500;
+}
+
+/* 다크모드에서 새로운 요소들 스타일 */
+body.dark .feature-item {
+  background: rgba(74, 158, 255, 0.1);
+  border-color: rgba(74, 158, 255, 0.2);
+}
+
+body.dark .feature-item:hover {
+  background: rgba(74, 158, 255, 0.15);
+  border-color: rgba(74, 158, 255, 0.3);
+}
+
+body.dark .feature-item i {
+  color: #4a9eff;
+}
+
+body.dark .feature-item span {
+  color: #e0e0e0;
+}
+
+body.dark .env-item {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.2);
+}
+
+body.dark .env-item i {
+  color: #4ade80;
+}
+
+body.dark .env-item span {
+  color: #d0d0d0;
+}
+
+/* 반응형 디자인 개선 */
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  
+  .feature-item {
+    padding: 10px;
+  }
+  
+  .env-item {
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .feature-item {
+    padding: 8px;
+  }
+  
+  .env-item {
+    padding: 6px 8px;
+  }
 } 

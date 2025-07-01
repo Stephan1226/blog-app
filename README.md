@@ -41,8 +41,8 @@
 - **Pygments 2.17.2**: 구문 강조 라이브러리
 
 #### **AI & Integration**
-- **Google Gemini API**: AI 기반 콘텐츠 요약
-- **google-generativeai 0.3.2**: Gemini API Python 클라이언트
+- **OpenRouter API**: AI 기반 콘텐츠 요약
+- **openai 1.3.0**: OpenAI API Python 클라이언트 (OpenRouter 호환)
 
 #### **Security & Authentication**
 - **Passlib**: 비밀번호 해싱
@@ -79,7 +79,7 @@
 - 마크다운 완전 지원 (제목, 코드블록, 표, 링크 등)
 - 목차 자동 생성 및 스무스 스크롤
 - 코드 블록 복사 버튼
-- Gemini AI 요약
+- OpenRouter AI 요약
 - 읽기 진행률 표시
 
 #### **포스트 작성/수정 페이지**
@@ -145,7 +145,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from sqlalchemy.orm import Session
 
 # 마크다운 및 AI 유틸리티 임포트
-from utils import markdown_to_html, extract_headings, summarize_with_gemini
+from utils import markdown_to_html, extract_headings, summarize_with_openrouter
 
 app = FastAPI(title="개발 블로그", description="FastAPI로 만든 개발 블로그")
 
@@ -215,7 +215,7 @@ alembic==1.12.1
 markdown==3.5.1
 pygments==2.17.2
 markdown-extensions==0.1.3
-google-generativeai==0.3.2
+openai==1.3.0
 ```
 
 ## 🚀 실행 방법
@@ -228,7 +228,7 @@ cd project
 
 # 2. 환경 변수 설정
 cp env.example .env
-# .env 파일에서 GEMINI_API_KEY 등 설정
+# .env 파일에서 API_KEY 등 설정
 
 # 3. Docker Compose 실행
 chmod +x run.sh

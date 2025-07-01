@@ -3,59 +3,154 @@
 {% block title %}소개 - 개발 블로그{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col s12 m8 offset-m2">
-        <div class="card">
-            <div class="card-content center-align">
-                <span class="card-title">
-                    <span class="material-icons large blue-text">person</span>
-                    <h3>블로그 소개</h3>
-                </span>
-                
-                <div class="about-feature-row">
-                    <div>
-                        <h5><span class="material-icons left">code</span> 기술 스택</h5>
-                        <ul class="icon-list">
-                            <li><span class="material-icons">code</span><span>FastAPI</span></li>
-                            <li><span class="material-icons">storage</span><span>SQLAlchemy</span></li>
-                            <li><span class="material-icons">dns</span><span>MySQL</span></li>
-                            <li><span class="material-icons">palette</span><span>Jinja2</span></li>
-                            <li><span class="material-icons">view_in_ar</span><span>Docker</span></li>
-                        </ul>
+<div class="responsive main-content">
+    <div class="content-area">
+        <section class="main-posts">
+            <h4>
+                <i>info</i>
+                블로그 소개
+            </h4>
+            
+            <article class="card">
+                <h5>
+                    <i>person</i>
+                    개발 블로그 소개
+                </h5>
+                <div class="meta-info">
+                    <small>
+                        <i>code</i> FastAPI 기반 블로그
+                        <i>storage</i> MySQL 데이터베이스
+                        <i>view_in_ar</i> Docker 컨테이너화
+                    </small>
+                </div>
+                <p>
+                    이 블로그는 FastAPI, SQLAlchemy, Jinja2를 활용하여 개발된 개인 블로그입니다.
+                    MySQL 데이터베이스를 사용하여 CRUD 기능을 구현했으며, Docker를 통해 컨테이너화되어 있습니다.
+                    마크다운 지원, AI 요약, 다크모드 등 다양한 기능을 제공합니다.
+                </p>
+                <div class="actions">
+                    <a href="/">
+                        <button>
+                            <i>home</i>
+                            <span>홈으로 돌아가기</span>
+                        </button>
+                    </a>
+                    <a href="/create">
+                        <button class="border">
+                            <i>add</i>
+                            <span>첫 글 작성하기</span>
+                        </button>
+                    </a>
+                </div>
+            </article>
+            
+            <article class="card">
+                <h5>
+                    <i>star</i>
+                    주요 기능
+                </h5>
+                <div class="meta-info">
+                    <small>
+                        <i>list</i> 포스트 관리
+                        <i>edit</i> 마크다운 지원
+                        <i>dark_mode</i> 다크모드
+                    </small>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <i>list</i>
+                        <span>포스트 목록 보기</span>
                     </div>
-                    
-                    <div>
-                        <h5><span class="material-icons left">star</span> 주요 기능</h5>
-                        <ul class="icon-list">
-                            <li><span class="material-icons">list</span><span>포스트 목록 보기</span></li>
-                            <li><span class="material-icons">add</span><span>새 포스트 작성</span></li>
-                            <li><span class="material-icons">edit</span><span>포스트 수정</span></li>
-                            <li><span class="material-icons">delete</span><span>포스트 삭제</span></li>
-                            <li><span class="material-icons">visibility</span><span>포스트 상세 보기</span></li>
-                        </ul>
+                    <div class="feature-item">
+                        <i>add</i>
+                        <span>새 포스트 작성</span>
+                    </div>
+                    <div class="feature-item">
+                        <i>edit</i>
+                        <span>포스트 수정</span>
+                    </div>
+                    <div class="feature-item">
+                        <i>delete</i>
+                        <span>포스트 삭제</span>
+                    </div>
+                    <div class="feature-item">
+                        <i>visibility</i>
+                        <span>포스트 상세 보기</span>
+                    </div>
+                    <div class="feature-item">
+                        <i>code</i>
+                        <span>마크다운 지원</span>
                     </div>
                 </div>
-                
-                <div class="divider"></div>
-                
-                <div class="section">
-                    <h5><span class="material-icons left">info</span> 프로젝트 정보</h5>
-                    <p class="flow-text grey-text text-darken-2">
-                        이 블로그는 FastAPI, SQLAlchemy, Jinja2를 활용하여 개발된 개인 블로그입니다.
-                        MySQL 데이터베이스를 사용하여 CRUD 기능을 구현했으며, Docker를 통해 컨테이너화되어 있습니다.
-                    </p>
-                    
-                    <div class="section">
-                        <a href="/" class="btn waves-effect waves-light blue">
-                            <span class="material-icons left">home</span> 홈으로 돌아가기
-                        </a>
-                        <a href="/create" class="btn waves-effect waves-light green">
-                            <span class="material-icons left">add</span> 첫 글 작성하기
-                        </a>
+            </article>
+        </section>
+        
+        <aside class="sidebar">
+            <!-- 기술 스택 -->
+            <article class="card">
+                <h6>
+                    <i>build</i>
+                    기술 스택
+                </h6>
+                <p>
+                    현대적인 웹 기술을 활용하여 구축된 블로그입니다.
+                </p>
+                <div class="tech-stack">
+                    <span class="chip">FastAPI</span>
+                    <span class="chip">MySQL</span>
+                    <span class="chip">Docker</span>
+                    <span class="chip">SQLAlchemy</span>
+                    <span class="chip">Jinja2</span>
+                    <span class="chip">Beer CSS</span>
+                </div>
+            </article>
+            
+            <!-- 개발 환경 -->
+            <article class="card">
+                <h6>
+                    <i>computer</i>
+                    개발 환경
+                </h6>
+                <div class="env-info">
+                    <div class="env-item">
+                        <i>code</i>
+                        <span>Python 3.11+</span>
+                    </div>
+                    <div class="env-item">
+                        <i>storage</i>
+                        <span>MySQL 8.0</span>
+                    </div>
+                    <div class="env-item">
+                        <i>view_in_ar</i>
+                        <span>Docker & Docker Compose</span>
+                    </div>
+                    <div class="env-item">
+                        <i>palette</i>
+                        <span>Material Icons</span>
                     </div>
                 </div>
-            </div>
-        </div>
+            </article>
+            
+            <!-- 프로젝트 정보 -->
+            <article class="card">
+                <h6>
+                    <i>info</i>
+                    프로젝트 정보
+                </h6>
+                <p>
+                    오픈소스로 개발된 블로그 플랫폼으로, 
+                    개발자들이 쉽게 사용할 수 있도록 설계되었습니다.
+                </p>
+                <div class="actions">
+                    <a href="https://github.com" target="_blank">
+                        <button class="border">
+                            <i>code</i>
+                            <span>GitHub</span>
+                        </button>
+                    </a>
+                </div>
+            </article>
+        </aside>
     </div>
 </div>
 {% endblock %} 

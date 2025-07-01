@@ -1,12 +1,20 @@
 import markdown
 import re
 from markdown.extensions import codehilite, toc
-import google.generativeai as genai
 import os
 from typing import List, Dict
+from openai import OpenAI
+import base64
+import httpx
+import json
 
-# Gemini AI 설정
-genai.configure(api_key=os.getenv("GEMINI_API_KEY", ""))
+# OpenRouter API 클라이언트 설정
+def get_openai_client():
+    """OpenRouter API 클라이언트 생성"""
+    return OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.getenv("API_KEY"),
+    )
 
 def markdown_to_html(text: str) -> str:
     """마크다운 텍스트를 HTML로 변환"""
@@ -57,25 +65,62 @@ def extract_headings(markdown_text: str) -> List[Dict[str, str]]:
     
     return headings
 
-async def summarize_with_gemini(content: str) -> str:
-    """Gemini AI를 사용하여 콘텐츠 요약"""
+async def summarize_with_openrouter(content: str) -> str:
+    """OpenRouter API를 사용하여 콘텐츠 요약"""
+    print("=== AI 요약 함수 호출됨 ===")
     try:
-        if not os.getenv("GEMINI_API_KEY"):
-            return "AI 요약을 사용하려면 GEMINI_API_KEY를 설정해주세요."
+        if not os.getenv("API_KEY"):
+            print("API_KEY가 설정되지 않음")
+            return "AI 요약을 사용하려면 API_KEY를 설정해주세요."
         
-        model = genai.GenerativeModel('gemini-pro')
-        prompt = f"""
-        다음 개발 블로그 글을 한국어로 간단하고 명확하게 요약해주세요. 
-        주요 기술적 내용과 핵심 포인트를 포함해주세요.
+        print("API_KEY 확인됨")
         
-        글 내용:
-        {content[:3000]}  # 토큰 제한을 위해 일부만 전송
-        """
+        # 콘텐츠 길이 제한 (API 토큰 제한 고려)
+        safe_content = content[:4000] if len(content) > 4000 else content
         
-        response = model.generate_content(prompt)
-        return response.text
+        print(f"원본 길이: {len(content)}, 처리 길이: {len(safe_content)}")
+        
+        if not safe_content.strip():
+            print("콘텐츠가 없음")
+            return "요약할 콘텐츠가 없습니다."
+        
+        print("API 호출 시작...")
+        
+        # 한글 프롬프트로 복구
+        prompt = f"""다음 개발 블로그 포스트를 한국어로 요약해주세요. 주요 기술적 내용과 핵심 포인트를 포함해주세요.
+
+콘텐츠:
+{safe_content}"""
+        
+        # 사용자 예제 코드 그대로 사용
+        client = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=os.getenv("API_KEY"),
+        )
+        
+        completion = client.chat.completions.create(
+            extra_headers={
+                "HTTP-Referer": "http://localhost:8000",
+                "X-Title": "Dev Blog",
+            },
+            extra_body={},
+            model="deepseek/deepseek-chat-v3-0324:free",
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        )
+        
+        print("API 호출 완료")
+        
+        summary_content = completion.choices[0].message.content
+        print("요약 성공")
+        return f"📝 AI 요약:\n\n{summary_content}"
         
     except Exception as e:
+        print(f"에러 발생: {type(e).__name__}: {str(e)}")
         return f"AI 요약 생성 중 오류가 발생했습니다: {str(e)}"
 
 def generate_reading_time(content: str) -> int:

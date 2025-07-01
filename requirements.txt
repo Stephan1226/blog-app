@@ -11,5 +11,7 @@ python-dotenv==1.0.0
 alembic==1.12.1
 markdown==3.5.1
 pygments==2.17.2
-google-generativeai==0.3.2
+openai>=1.50.0
+requests>=2.31.0
+httpx>=0.25.0
 itsdangerous==2.1.2 
