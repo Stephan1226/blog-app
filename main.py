@@ -14,6 +14,8 @@ from crud import post_crud, user_crud
 from schemas import PostCreate, PostUpdate, UserCreate
 from utils import markdown_to_html, extract_headings, summarize_with_openrouter, generate_reading_time
 from auth import authenticate_user, require_auth, is_authenticated
+from sqladmin import Admin
+from admin import UserAdmin, PostAdmin
 
 # 상수 정의
 DEFAULT_SECRET_KEY = "your-secret-key-here"
@@ -37,12 +39,35 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="개발 블로그", description="FastAPI로 만든 개발 블로그")
 
+# Admin 페이지 설정
+admin = Admin(app, engine)
+admin.add_view(UserAdmin)
+admin.add_view(PostAdmin)
+
 # 세션 미들웨어 추가
 app.add_middleware(
     SessionMiddleware,
     secret_key=os.getenv("SECRET_KEY", DEFAULT_SECRET_KEY),
     max_age=SESSION_MAX_AGE
 )
+
+# 초기 관리자 계정 생성
+@app.on_event("startup")
+async def startup_event():
+    db = next(get_db())
+    try:
+        # 'system' 관리자 계정 확인 및 생성
+        admin_user = user_crud.get_user_by_username(db, "system")
+        if not admin_user:
+            admin_create = UserCreate(
+                username="system",
+                email="system@example.com",
+                password="1234"
+            )
+            user_crud.create_user(db, admin_create)
+            print("✅ 'system' 관리자 계정이 생성되었습니다.")
+    finally:
+        db.close()
 
 # 정적 파일과 템플릿 설정
 app.mount("/static", StaticFiles(directory="static"), name="static")
