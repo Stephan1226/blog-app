@@ -1202,3 +1202,9 @@ body.dark .env-item span {
     min-height: 400px;
   }
 } 
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* 버튼 사이 간격 */
+  }
