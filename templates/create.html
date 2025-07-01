@@ -3,148 +3,151 @@
 {% block title %}새 글 작성 - 개발 블로그{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col s12 m6">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">
-                    <span class="material-icons left">edit</span> 새 글 작성
-                </span>
-                
-                <form method="POST" action="/create" id="post-form">
-                    <div class="input-field">
-                        <input type="text" id="title" name="title" required>
-                        <label for="title">제목</label>
-                    </div>
-                    <div class="input-field">
-                        <textarea class="materialize-textarea" id="content" name="content" required
-                                  placeholder="# 제목
-
-## 소제목
-
-**굵은 글씨**와 *기울임 글씨*를 사용할 수 있습니다.
-
-```python
-# 코드 블록 예시
-def hello_world():
-    print('Hello, World!')
-```
-
-- 목록 항목 1
-- 목록 항목 2
-
-[링크](https://example.com)도 추가할 수 있습니다."></textarea>
-                        <label for="content">내용 <small class="grey-text">(마크다운 지원)</small></label>
-                    </div>
-                    
-                    <!-- 마크다운 도움말 -->
-                    <div class="section">
-                        <a class="btn-flat waves-effect waves-light blue-text" onclick="toggleMarkdownHelp()">
-                            <span class="material-icons left">help</span> 마크다운 도움말
-                        </a>
-                        <div id="markdown-help" class="card-panel blue lighten-5" style="display: none;">
-                            <h6>마크다운 문법:</h6>
-                            <p><code># 제목</code> - 큰 제목</p>
-                            <p><code>## 소제목</code> - 작은 제목</p>
-                            <p><code>**굵게**</code> - 굵은 글씨</p>
-                            <p><code>*기울임*</code> - 기울임 글씨</p>
-                            <p><code>`코드`</code> - 인라인 코드</p>
-                            <p><code>```언어<br>코드 블록<br>```</code> - 코드 블록</p>
-                            <p><code>- 항목</code> - 목록</p>
-                            <p><code>[텍스트](URL)</code> - 링크</p>
-                        </div>
-                    </div>
-                    
-                    <div class="card-action">
-                        <a href="/" class="btn-flat waves-effect waves-light">
-                            <span class="material-icons left">arrow_back</span> 취소
-                        </a>
-                        <button type="submit" class="btn waves-effect waves-light blue right">
-                            <span class="material-icons left">save</span> 저장
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 실시간 미리보기 -->
-    <div class="col s12 m6">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">
-                    <span class="material-icons left">visibility</span> 미리보기
-                </span>
-                <div id="preview-content" style="min-height: 400px;">
-                    <p class="grey-text text-darken-1">내용을 입력하면 미리보기가 표시됩니다.</p>
+<div class="responsive main-content">
+    <div class="content-area">
+        <section class="main-posts">
+            <div class="write-header">
+                <div class="write-toolbar">
+                    <button type="button" class="toolbar-btn" id="save-draft-btn"><i>save</i>임시저장</button>
+                    <button type="button" class="toolbar-btn" id="preview-toggle-btn"><i>visibility</i>미리보기</button>
+                    <button type="submit" form="post-form" class="toolbar-btn primary"><i>publish</i>발행</button>
                 </div>
             </div>
-        </div>
+            <div class="write-flex no-card">
+                <div class="write-form-area plain-area">
+                    <form method="POST" action="/create" id="post-form">
+                        <div class="field">
+                            <input type="text" id="title" name="title" class="write-title" placeholder="제목을 입력하세요" required>
+                        </div>
+                        <div class="markdown-toolbar">
+                            <button type="button" data-md="bold" title="굵게"><b>B</b></button>
+                            <button type="button" data-md="italic" title="기울임"><i class="material-icons">format_italic</i></button>
+                            <button type="button" data-md="code" title="코드">{;}</button>
+                            <button type="button" data-md="link" title="링크">🔗</button>
+                            <button type="button" data-md="list" title="목록">• List</button>
+                            <button type="button" data-md="quote" title="인용">❝</button>
+                            <button type="button" data-md="heading" title="제목">H</button>
+                        </div>
+                        <div class="field">
+                            <textarea id="content" name="content" required rows="15" placeholder="당신의 이야기를 적어보세요..."></textarea>
+                        </div>
+                        <div class="field">
+                            <button type="button" class="border" onclick="toggleMarkdownHelp()">
+                                <i>help</i>
+                                <span>마크다운 도움말</span>
+                            </button>
+                            <div id="markdown-help" class="card" style="display: none; margin-top: 16px;">
+                                <h6>마크다운 문법:</h6>
+                                <p><code># 제목</code> - 큰 제목</p>
+                                <p><code>## 소제목</code> - 작은 제목</p>
+                                <p><code>**굵게**</code> - 굵은 글씨</p>
+                                <p><code>*기울임*</code> - 기울임 글씨</p>
+                                <p><code>`코드`</code> - 인라인 코드</p>
+                                <p><code>```언어<br>코드 블록<br>```</code> - 코드 블록</p>
+                                <p><code>- 항목</code> - 목록</p>
+                                <p><code>[텍스트](URL)</code> - 링크</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="write-preview-area plain-area" id="write-preview-area">
+                    <div>
+                        <h6><i>visibility</i>미리보기</h6>
+                        <div id="preview-content" style="min-height: 600px;">
+                            <p class="grey-text">내용을 입력하면 미리보기가 표시됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    M.updateTextFields();
-    M.textareaAutoResize(document.getElementById('content'));
-});
-
 function toggleMarkdownHelp() {
     const helpDiv = document.getElementById('markdown-help');
+    const mainContent = document.querySelector('.main-content');
     if (helpDiv.style.display === 'none') {
         helpDiv.style.display = 'block';
+        mainContent.classList.add('markdown-help-open');
     } else {
         helpDiv.style.display = 'none';
+        mainContent.classList.remove('markdown-help-open');
     }
 }
-
+// 마크다운 툴바 기능
+const mdToolbar = document.querySelector('.markdown-toolbar');
+const textarea = document.getElementById('content');
+if(mdToolbar && textarea) {
+    mdToolbar.addEventListener('click', function(e) {
+        if(e.target.tagName === 'BUTTON') {
+            const type = e.target.getAttribute('data-md');
+            let [start, end] = [textarea.selectionStart, textarea.selectionEnd];
+            let value = textarea.value;
+            let insert = '', offset = 0;
+            switch(type) {
+                case 'bold': insert = '**굵게**'; offset = 2; break;
+                case 'italic': insert = '*기울임*'; offset = 1; break;
+                case 'code': insert = '``코드``'; offset = 1; break;
+                case 'link': insert = '[텍스트](url)'; offset = 1; break;
+                case 'list': insert = '- 항목'; offset = 2; break;
+                case 'quote': insert = '> 인용문'; offset = 2; break;
+                case 'heading': insert = '# 제목'; offset = 2; break;
+            }
+            if(insert) {
+                textarea.value = value.slice(0, start) + insert + value.slice(end);
+                textarea.focus();
+                textarea.setSelectionRange(start+offset, start+insert.length-offset);
+            }
+        }
+    });
+}
+// 미리보기 탭 전환
+const previewToggleBtn = document.getElementById('preview-toggle-btn');
+const writeFormArea = document.querySelector('.write-form-area');
+const writePreviewArea = document.getElementById('write-preview-area');
+let previewMode = false;
+if(previewToggleBtn) {
+    previewToggleBtn.addEventListener('click', function() {
+        previewMode = !previewMode;
+        if(previewMode) {
+            writeFormArea.style.display = 'none';
+            writePreviewArea.style.display = 'block';
+            previewToggleBtn.classList.add('active');
+        } else {
+            writeFormArea.style.display = 'block';
+            writePreviewArea.style.display = 'flex';
+            previewToggleBtn.classList.remove('active');
+        }
+    });
+}
 // 실시간 마크다운 미리보기
 let previewTimeout;
-const contentTextarea = document.getElementById('content');
 const previewDiv = document.getElementById('preview-content');
-
 function updatePreview() {
-    const content = contentTextarea.value;
-    
+    const content = textarea.value;
     if (!content.trim()) {
-        previewDiv.innerHTML = '<p class="grey-text text-darken-1">내용을 입력하면 미리보기가 표시됩니다.</p>';
+        previewDiv.innerHTML = '<p class="grey-text">내용을 입력하면 미리보기가 표시됩니다.</p>';
         return;
     }
-    
-    // 간단한 클라이언트 사이드 마크다운 렌더링
     let html = content;
-    
-    // 제목
     html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
     html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
     html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-    
-    // 굵게, 기울임
     html = html.replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>');
     html = html.replace(/\*(.*)\*/gim, '<em>$1</em>');
-    
-    // 인라인 코드
     html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
-    
-    // 링크
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>');
-    
-    // 목록
     html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
     html = html.replace(/(<li>.*<\/li>)/gims, '<ul>$1</ul>');
-    
-    // 줄바꿈
     html = html.replace(/\n/gim, '<br>');
-    
     previewDiv.innerHTML = html;
 }
-
-contentTextarea.addEventListener('input', function() {
-    clearTimeout(previewTimeout);
-    previewTimeout = setTimeout(updatePreview, 300);
-});
-
-// 초기 미리보기 업데이트
-updatePreview();
+if(textarea) {
+    textarea.addEventListener('input', function() {
+        clearTimeout(previewTimeout);
+        previewTimeout = setTimeout(updatePreview, 300);
+    });
+    updatePreview();
+}
 </script>
 {% endblock %} 

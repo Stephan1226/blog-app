@@ -16,8 +16,17 @@ def get_openai_client():
         api_key=os.getenv("API_KEY"),
     )
 
+def add_heading_ids(html: str, headings: list) -> str:
+    """HTML heading 태그에 id 속성 추가"""
+    for h in headings:
+        # ex) <h2>제목</h2> → <h2 id="anchor">제목</h2>
+        pattern = rf'(<h{h["level"]}[^>]*>)(.*?){re.escape(h["title"])}(.*?</h{h["level"]}>)'
+        replacement = rf'<h{h["level"]} id="{h["anchor"]}">\g<2>{h["title"]}\g<3>'
+        html = re.sub(pattern, replacement, html, count=1)
+    return html
+
 def markdown_to_html(text: str) -> str:
-    """마크다운 텍스트를 HTML로 변환"""
+    """마크다운 텍스트를 HTML로 변환 (heading에 id 부여)"""
     md = markdown.Markdown(
         extensions=[
             'codehilite',
@@ -40,6 +49,9 @@ def markdown_to_html(text: str) -> str:
     )
     html_content = md.convert(text)
     toc_html = md.toc
+    # heading id 부여
+    headings = extract_headings(text)
+    html_content = add_heading_ids(html_content, headings)
     return html_content, toc_html
 
 def extract_headings(markdown_text: str) -> List[Dict[str, str]]:

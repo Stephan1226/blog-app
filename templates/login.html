@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}로그인 - 개발 블로그{% endblock %}
+
+{% block content %}
+<div class="responsive main-content">
+    <div class="content-area">
+        <section class="main-posts">
+            <div class="center-align large-padding">
+                <i class="extra">login</i>
+                <h4>로그인</h4>
+                <p>개발 블로그에 로그인하여 포스트를 작성하고 관리하세요.</p>
+                
+                {% if error %}
+                <div class="alert error">
+                    <i>error</i>
+                    <span>{{ error }}</span>
+                </div>
+                {% endif %}
+                
+                <div class="card" style="max-width: 400px; margin: 0 auto;">
+                    <form method="POST" action="/login" class="login-form">
+                        <div class="field">
+                            <label for="username" class="login-label">사용자 이름</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        
+                        <div class="field">
+                            <label for="password" class="login-label">비밀번호</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        
+                        <div class="field">
+                            <button type="submit" class="large">
+                                <i>login</i>
+                                <span>로그인</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="small-padding">
+                    <p><small>초기 관리자 계정: <code>system</code> / <code>1234</code></small></p>
+                </div>
+            </div>
+        </section>
+        
+        <aside class="sidebar">
+            <!-- 로그인 안내 -->
+            <article class="card">
+                <h6>
+                    <i>info</i>
+                    로그인 안내
+                </h6>
+                <p>
+                    로그인하면 다음과 같은 기능을 사용할 수 있습니다:
+                </p>
+                <ul>
+                    <li>새 포스트 작성</li>
+                    <li>기존 포스트 수정</li>
+                    <li>포스트 삭제</li>
+                    <li>AI 요약 기능</li>
+                </ul>
+            </article>
+            
+            <!-- 개발 블로그 소개 -->
+            <article class="card">
+                <h6>
+                    <i>code</i>
+                    개발 블로그 소개
+                </h6>
+                <p>
+                    FastAPI, SQLAlchemy, Jinja2로 구축된 개발 블로그입니다. 
+                    마크다운 지원, AI 요약, 다크모드 등 다양한 기능을 제공합니다.
+                </p>
+                <a href="/about">
+                    <button class="border">
+                        <i>info</i>
+                        <span>더 알아보기</span>
+                    </button>
+                </a>
+            </article>
+            
+            <!-- 기술 스택 -->
+            <article class="card">
+                <h6>
+                    <i>build</i>
+                    기술 스택
+                </h6>
+                <div class="tech-stack">
+                    <span class="chip">FastAPI</span>
+                    <span class="chip">MySQL</span>
+                    <span class="chip">Docker</span>
+                    <span class="chip">SQLAlchemy</span>
+                    <span class="chip">Jinja2</span>
+                    <span class="chip">Beer CSS</span>
+                </div>
+            </article>
+        </aside>
+    </div>
+</div>
+{% endblock %} 

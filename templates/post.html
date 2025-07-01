@@ -3,195 +3,135 @@
 {% block title %}{{ post.title }} - 개발 블로그{% endblock %}
 
 {% block content %}
-<div class="row">
-    <!-- 메인 포스트 내용 -->
-    <div class="col s12 m9">
-        <article class="card">
-            <div class="card-content">
-                <header class="section">
-                    <h4 class="grey-text text-darken-3 icon-with-text">{{ post.title }}</h4>
-                    <p class="grey-text text-darken-1 icon-with-text">
-                        <span class="material-icons tiny">event</span> <span>{{ post.created_at.strftime('%Y년 %m월 %d일 %H:%M') }}</span>
-                        {% if post.author %}
-                        <span class="material-icons tiny">person</span> <span>{{ post.author.username }}</span>
-                        {% endif %}
-                        {% if post.updated_at and post.updated_at != post.created_at %}
-                        <span class="material-icons tiny">edit</span> <span>수정됨: {{ post.updated_at.strftime('%Y년 %m월 %d일 %H:%M') }}</span>
-                        {% endif %}
-                        <span class="material-icons tiny">schedule</span> <span>약 {{ reading_time }}분 읽기</span>
-                    </p>
-                    
-                    <!-- AI 요약 버튼 -->
-                    <div class="section">
-                        <button class="btn waves-effect waves-light blue icon-with-text" id="ai-summary-btn">
-                            <span class="material-icons left">smart_toy</span> AI 요약 보기
+<div class="responsive main-content">
+    <div class="content-area">
+        <section class="main-posts">
+            <article class="card">
+                <div class="card-content">
+                    <h4 class="icon-with-text">{{ post.title }}</h4>
+                    <div class="meta-info">
+                        <small>
+                            <i>event</i> {{ post.created_at.strftime('%Y년 %m월 %d일 %H:%M') }}
+                            {% if post.author %}
+                            <i>person</i> {{ post.author.username }}
+                            {% endif %}
+                            {% if post.updated_at and post.updated_at != post.created_at %}
+                            <i>edit</i> 수정됨: {{ post.updated_at.strftime('%Y년 %m월 %d일 %H:%M') }}
+                            {% endif %}
+                            <i>schedule</i> 약 {{ reading_time }}분 읽기
+                        </small>
+                    </div>
+                    <div class="actions" style="margin-bottom: 1rem;">
+                        <button class="button-primary" id="ai-summary-btn">
+                            <i>smart_toy</i>
+                            <span>AI 요약 보기</span>
                         </button>
                     </div>
-                    
-                    <!-- AI 요약 결과 -->
                     <div id="ai-summary" class="card" style="display: none;">
                         <div class="card-content">
-                            <h6 class="icon-with-text"><span class="material-icons left">smart_toy</span>AI 요약</h6>
+                            <h6 class="icon-with-text"><i>smart_toy</i>AI 요약</h6>
                             <div id="summary-content">요약을 생성 중입니다...</div>
                         </div>
                     </div>
-                </header>
-                
-                <!-- 마크다운 렌더링된 콘텐츠 -->
-                <div class="markdown-content">
-                    {{ html_content | safe }}
+                    <div class="markdown-content" style="margin-top: 2rem;">
+                        {{ html_content | safe }}
+                    </div>
                 </div>
-            </div>
-            
-            <div class="card-action">
-                <a href="/" class="btn-flat waves-effect waves-light icon-with-text">
-                    <span class="material-icons left">arrow_back</span> 목록으로
-                </a>
-                {% if is_authenticated and post.author and post.author.username == request.session.username %}
-                <div class="right">
-                    <a href="/edit/{{ post.id }}" class="btn waves-effect waves-light blue icon-with-text">
-                        <span class="material-icons left">edit</span> 수정
+                <div class="actions">
+                    <a href="/">
+                        <button class="border">
+                            <i>arrow_back</i>
+                            <span>목록으로</span>
+                        </button>
                     </a>
-                    <button class="btn waves-effect waves-light red icon-with-text" onclick="deletePost('{{ post.id }}')">
-                        <span class="material-icons left">delete</span> 삭제
+                    {% if is_authenticated and post.author and post.author.username == request.session.username %}
+                    <a href="/edit/{{ post.id }}">
+                        <button class="border">
+                            <i>edit</i>
+                            <span>수정</span>
+                        </button>
+                    </a>
+                    <button class="border" onclick="deletePost('{{ post.id }}')">
+                        <i>delete</i>
+                        <span>삭제</span>
                     </button>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
-        </article>
-    </div>
-    
-    <!-- 챕터 사이드바 -->
-    <div class="col s12 m3">
-        <div class="sticky-sidebar">
+            </article>
+        </section>
+        <aside class="sidebar post-sidebar">
             {% if headings %}
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title icon-with-text">
-                        <span class="material-icons left">list</span> 목차
-                    </span>
-                    <nav class="toc">
-                        {% for heading in headings %}
-                        <div class="toc-item level-{{ heading.level }}">
-                            <a href="#{{ heading.anchor }}" class="toc-link grey-text text-darken-2">
-                                {{ heading.title }}
-                            </a>
-                        </div>
-                        {% endfor %}
-                    </nav>
-                </div>
-            </div>
+            <article class="card toc-card">
+                <h6 class="icon-with-text"><i>list</i>목차</h6>
+                <nav class="toc">
+                    {% for heading in headings %}
+                    <div class="toc-item level-{{ heading.level }}">
+                        <a href="#{{ heading.anchor }}" class="toc-link">
+                            {{ heading.title }}
+                        </a>
+                    </div>
+                    {% endfor %}
+                </nav>
+            </article>
             {% endif %}
-            
-            <!-- 포스트 정보 -->
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title icon-with-text">
-                        <span class="material-icons left">info</span> 포스트 정보
-                    </span>
-                    <p class="grey-text text-darken-1 icon-with-text">
-                        <span class="material-icons tiny">event</span> <span>작성일: {{ post.created_at.strftime('%Y.%m.%d') }}</span>
-                        <span class="material-icons tiny">schedule</span> <span>읽기 시간: {{ reading_time }}분</span>
-                        {% if post.author %}
-                        <span class="material-icons tiny">person</span> <span>작성자: {{ post.author.username }}</span>
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
-        </div>
+            <article class="card info-card">
+                <h6 class="icon-with-text"><i>info</i>포스트 정보</h6>
+                <p class="meta-info">
+                    <i>event</i> 작성일: {{ post.created_at.strftime('%Y.%m.%d') }}<br>
+                    <i>schedule</i> 읽기 시간: {{ reading_time }}분<br>
+                    {% if post.author %}
+                    <i>person</i> 작성자: {{ post.author.username }}
+                    {% endif %}
+                </p>
+            </article>
+        </aside>
     </div>
 </div>
 
-<style>
-.sticky-sidebar {
-    position: sticky;
-    top: 2rem;
-}
-.toc-item {
-    margin: 0.5rem 0;
-}
-.toc-item.level-1 { margin-left: 0; }
-.toc-item.level-2 { margin-left: 1rem; }
-.toc-item.level-3 { margin-left: 2rem; }
-.toc-item.level-4 { margin-left: 3rem; }
-.toc-item.level-5 { margin-left: 4rem; }
-.toc-item.level-6 { margin-left: 5rem; }
-.toc-link {
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-.toc-link:hover {
-    color: #2196F3 !important;
-}
-.toc-link.active {
-    color: #2196F3 !important;
-    font-weight: bold;
-}
-.markdown-content h1, .markdown-content h2, .markdown-content h3,
-.markdown-content h4, .markdown-content h5, .markdown-content h6 {
-    scroll-margin-top: 100px;
-}
-</style>
-
 <script>
 // AI 요약 기능
-document.getElementById('ai-summary-btn').addEventListener('click', async function() {
-    const btn = this;
-    const summaryDiv = document.getElementById('ai-summary');
-    const summaryContent = document.getElementById('summary-content');
-    
-    // 버튼 상태 변경
-    btn.disabled = true;
-    btn.innerHTML = '<span class="material-icons left">hourglass_empty</span> 요약 생성 중...';
-    
-    // 요약 영역 표시
-    summaryDiv.style.display = 'block';
-    summaryContent.innerHTML = '요약을 생성 중입니다...';
-    
-    try {
-        const response = await fetch(`/api/summarize/{{ post.id }}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        
-        const data = await response.json();
-        summaryContent.innerHTML = data.summary;
-        
-    } catch (error) {
-        summaryContent.innerHTML = '요약 생성 중 오류가 발생했습니다.';
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<span class="material-icons left">smart_toy</span> AI 요약 완료';
-    }
-});
-
+const aiBtn = document.getElementById('ai-summary-btn');
+if(aiBtn) {
+    aiBtn.addEventListener('click', async function() {
+        const btn = this;
+        const summaryDiv = document.getElementById('ai-summary');
+        const summaryContent = document.getElementById('summary-content');
+        btn.disabled = true;
+        btn.innerHTML = '<i>hourglass_empty</i> 요약 생성 중...';
+        summaryDiv.style.display = 'block';
+        summaryContent.innerHTML = '요약을 생성 중입니다...';
+        try {
+            const response = await fetch(`/api/summarize/{{ post.id }}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await response.json();
+            summaryContent.innerHTML = data.summary;
+        } catch (error) {
+            summaryContent.innerHTML = '요약 생성 중 오류가 발생했습니다.';
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i>smart_toy</i> AI 요약 완료';
+        }
+    });
+}
 // 목차 스무스 스크롤
-document.querySelectorAll('.toc-link').forEach(link => {
+const tocLinks = document.querySelectorAll('.toc-link');
+tocLinks.forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
         const targetId = this.getAttribute('href').substring(1);
         const targetElement = document.getElementById(targetId);
-        
         if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            
-            // 활성 링크 표시
-            document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            tocLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         }
     });
 });
-
 // 스크롤 시 현재 섹션 하이라이트
 window.addEventListener('scroll', function() {
     const headings = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]');
-    const tocLinks = document.querySelectorAll('.toc-link');
-    
     let current = '';
     headings.forEach(heading => {
         const rect = heading.getBoundingClientRect();
@@ -199,7 +139,6 @@ window.addEventListener('scroll', function() {
             current = heading.id;
         }
     });
-    
     tocLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === '#' + current) {
@@ -207,14 +146,11 @@ window.addEventListener('scroll', function() {
         }
     });
 });
-
 function deletePost(postId) {
     if (confirm('정말로 이 포스트를 삭제하시겠습니까?')) {
         fetch(`/delete/${postId}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
         }).then(response => {
             if (response.ok) {
                 window.location.href = '/';
@@ -223,4 +159,49 @@ function deletePost(postId) {
     }
 }
 </script>
+
+<style>
+.post-sidebar {
+    position: sticky;
+    top: 2.5rem;
+    z-index: 2;
+}
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.toc-card, .info-card {
+    margin-bottom: 1.5rem;
+}
+.toc {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.toc-item {
+    margin: 0.5rem 0;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+.toc-link {
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 2px 0;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+.toc-link:hover, .toc-link.active {
+    color: #2196F3 !important;
+    font-weight: bold;
+}
+.toc-item.level-1 { margin-left: 0; }
+.toc-item.level-2 { margin-left: 1rem; }
+.toc-item.level-3 { margin-left: 2rem; }
+.toc-item.level-4 { margin-left: 3rem; }
+.toc-item.level-5 { margin-left: 4rem; }
+.toc-item.level-6 { margin-left: 5rem; }
+</style>
 {% endblock %} 

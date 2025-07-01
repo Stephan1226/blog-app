@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}개발 블로그{% endblock %}</title>
+    <title>{% block title %}Stephan's Dev{% endblock %}</title>
     
     <!-- Beer CSS (Material Design 3) -->
     <link href="https://cdn.jsdelivr.net/npm/beercss@3.11.29/dist/cdn/beer.min.css" rel="stylesheet">
@@ -17,12 +17,14 @@
     
     <!-- Custom styles -->
     <link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
+
+    <link rel="icon" type="image/jpeg" href="/static/favicon.jpeg">
 </head>
 <body class="light">
     <!-- 네비게이션 바 -->
     <nav class="top">
         <div class="nav-left">
-            <h6>개발 블로그</h6>
+            <h6>Stephan's Dev</h6>
             <a href="/">홈</a>
             <a href="/about">소개</a>
         </div>
@@ -31,6 +33,23 @@
             <button id="theme-toggle">
                 <i class="material-icons" id="theme-icon">dark_mode</i>
             </button>
+            {% if is_authenticated %}
+                <span class="user-info">
+                    <i>person</i>
+                    {{ request.session.username }}
+                </span>
+                <form method="POST" action="/logout" style="display: inline;">
+                    <button type="submit" class="border">
+                        <i>logout</i>
+                        <span>로그아웃</span>
+                    </button>
+                </form>
+            {% else %}
+                <a href="/login" class="button-primary">
+                    <i>login</i>
+                    <span>로그인</span>
+                </a>
+            {% endif %}
             <a href="/admin" class="button-primary">어드민</a>
         </div>
     </nav>

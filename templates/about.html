@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}소개 - 개발 블로그{% endblock %}
+{% block title %}about - Stephan's Dev{% endblock %}
 
 {% block content %}
 <div class="responsive main-content">
@@ -58,27 +58,27 @@
                 </div>
                 <div class="feature-grid">
                     <div class="feature-item">
-                        <i>list</i>
+                        <i class="material-icons">list</i>
                         <span>포스트 목록 보기</span>
                     </div>
                     <div class="feature-item">
-                        <i>add</i>
+                        <i class="material-icons">add</i>
                         <span>새 포스트 작성</span>
                     </div>
                     <div class="feature-item">
-                        <i>edit</i>
+                        <i class="material-icons">edit</i>
                         <span>포스트 수정</span>
                     </div>
                     <div class="feature-item">
-                        <i>delete</i>
+                        <i class="material-icons">delete</i>
                         <span>포스트 삭제</span>
                     </div>
                     <div class="feature-item">
-                        <i>visibility</i>
+                        <i class="material-icons">visibility</i>
                         <span>포스트 상세 보기</span>
                     </div>
                     <div class="feature-item">
-                        <i>code</i>
+                        <i class="material-icons">code</i>
                         <span>마크다운 지원</span>
                     </div>
                 </div>
@@ -153,4 +153,31 @@
         </aside>
     </div>
 </div>
+
+<style>
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  padding: 32px 0;
+  box-sizing: border-box;
+}
+.feature-item .material-icons {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 12px;
+  color: #5a3fa0;
+  line-height: 1;
+  vertical-align: middle;
+  overflow: visible;
+  box-sizing: content-box;
+}
+</style>
 {% endblock %} 
